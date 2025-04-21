@@ -1,0 +1,20 @@
+spring:
+  devtools:
+    livereload:
+      enabled: true
+  datasource:
+    url: ${DATASOURCE_URL}
+    username: ${DATASOURCE_USERNAME}
+    password: ${DATASOURCE_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: ${DDL-AUTO-PER-ENV} # or validate / none / create / create-drop
+    show-sql: false
+    properties:
+      "[hibernate.format_sql]": false
+
+  application:
+    name: ${SPRING_APPLICATION_NAME}
+server:
+  port: ${SPRING_APPLICATION_SERVER_PORT}

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class StringService {
 
-    public String getProjectName() {
-        return "spring-hibernate-postgresql-demo";
-    }
+  public String getProjectName() {
+    return "spring-hibernate-postgresql-demo";
+  }
 }
