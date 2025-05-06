@@ -2,35 +2,45 @@ package io.github.juniperfags.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import io.github.juniperfags.configuration.security.models.JwtAuthToken;
-import io.github.juniperfags.services.StringService;
+import io.github.juniperfags.dtos.book.CreateBookDto;
+import io.github.juniperfags.dtos.book.BookResponse;
+import io.github.juniperfags.mappers.BookMapper;
+import io.github.juniperfags.services.BookService;
+import jakarta.validation.Valid;
 
-import org.springframework.security.core.Authentication;
+import java.util.List;
+
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController()
-@RequestMapping("/api")
+@RequestMapping("/api/book")
 public class BookController {
 
-  private StringService stringService;
+  private final BookService bookService;
+  private final BookMapper bookMapper;
 
-  public BookController(StringService stringService) {
-    this.stringService = stringService;
+  public BookController(BookService bookService, BookMapper bookMapper) {
+    this.bookService = bookService;
+    this.bookMapper = bookMapper;
   }
 
-  @GetMapping("/public")
-  public String publicMethod() {
-    return stringService.getProjectName();
+  @PostMapping("/create")
+  public BookResponse create(@RequestBody @Valid CreateBookDto requestBody) {
+    return this.bookMapper.toResponse(this.bookService.create(requestBody));
   }
 
-  @GetMapping("/private")
-  public String privateMethod(@RequestBody Object requestBody, Authentication authentication) {
+  @GetMapping("/list")
+  public List<BookResponse> list() {
+    return this.bookMapper.toResponse(this.bookService.list());
+  }
 
-    JwtAuthToken token = (JwtAuthToken) authentication.getPrincipal();
-
-    return String.format("User %s welcome to the private route", token.getName());
+  @GetMapping("/find/{id}")
+  public BookResponse find(@PathVariable Long id) {
+    return this.bookMapper.toResponse(this.bookService.findById(id));
   }
 
 }
