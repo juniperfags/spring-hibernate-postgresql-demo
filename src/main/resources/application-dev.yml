@@ -3,9 +3,9 @@ spring:
     livereload:
       enabled: true
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
-    username: postgres
-    password: postgres
+    url: ${DATASOURCE_URL}
+    username: ${DATASOURCE_USERNAME}
+    password: ${DATASOURCE_PASSWORD}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -17,7 +17,7 @@ spring:
   application:
     name: spring-hibernate-postgresql-application
 server:
-  port: 8082
+  port: ${APPLICATION_PORT}
 logging:
   level:
     "[org.springframework.security.web]": TRACE
